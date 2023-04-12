@@ -7,10 +7,12 @@ import {v4 as uuidv4} from 'uuid';
 
 export interface EntriesState{
     entries: Array<Entry>;
+    
   
 }
 interface EntriesProviderProps {
     children: React.ReactNode;
+    addEntry:Function;
    
 }
 
@@ -72,15 +74,20 @@ export const EntriesProvider = ({children}:EntriesProviderProps) => {
   
   const [state, dispatch] = useReducer(EntriesReducer, ENTRIES_INITIAL_STATE);
 
- 
+  const addEntry = (entry:Entry) => {
+    dispatch({
+      type: 'SET_NEW_ENTRY',
+      payload: entry,
+    })
+  }
+
   
   
 
   return (
     <EntriesContext.Provider value={{
-      
-      entries:state.entries
-      
+      entries:state.entries,
+      addEntry:addEntry,
     }}>
         {children}
     </EntriesContext.Provider>

@@ -20,19 +20,21 @@ export const SideBar = () => {
     onClose={()=>{
       toggleMenu()
     }}
-
+  
     sx={{
       position: 'sticky',
       top: '100px',
+      zIndex: 1000,
     }}
     
    >
     <Box sx={{width:250}}>
     <Box sx={{
     padding: '5px 10px', 
-    
+    position: 'absolute',
+    top: '64px',
    }}>
-    <Typography variant="h4" >Menu</Typography>
+   
       <List>
         {menuItems.map((item,index) => (
           <ListItem key={index} >

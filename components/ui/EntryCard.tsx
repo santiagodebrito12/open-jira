@@ -3,7 +3,9 @@ import { Entry } from "@/interfaces"
 import { Box, Input,Card, CardActionArea, CardContent, Typography, CardActions } from "@mui/material"
 
 export const EntryCard = ({_id,description,status,createdAt}:Entry) => {
-  return (
+  
+  
+    return (
     <Card sx={{
         margin: '12px 0px',
         

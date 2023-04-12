@@ -2,7 +2,7 @@ import {useContext,useState} from "react"
 import {EntriesContext} from '@/context/entries';
 import { Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
 import { Layout } from '@/components/layout';
-import { EntryList } from '@/components/ui';
+import { EntryList,NewEntry } from '@/components/ui';
 
 export default function Home() {
   const{entries}=useContext(EntriesContext);
@@ -15,19 +15,21 @@ export default function Home() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={4}>
           <Card sx={{
-            height:'calc(100vh - 100px)'
+            // height:'calc(100vh - 100px)'
           }}>
             <CardHeader title='Pendientes'  sx={{
               textAlign: 'center'
             }}/>
+
             <CardContent>
+            <NewEntry/>
             <EntryList status='pending'/>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={4}>
         <Card sx={{
-            height:'calc(100vh - 100px)'
+            // height:'calc(100vh - 100px)'
           }}>
             <CardHeader title='En Proceso' sx={{
               textAlign: 'center'
@@ -39,7 +41,7 @@ export default function Home() {
         </Grid>
         <Grid item xs={12} sm={4}>
         <Card sx={{
-            height:'calc(100vh - 100px)'
+            // height:'calc(100vh - 100px)'
           }}>
             <CardHeader title='Finalizadas' sx={{
               textAlign: 'center'
