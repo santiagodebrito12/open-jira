@@ -4,6 +4,7 @@ import { UiReducer } from "./UiReducer";
 
 export interface UiState{
     sideMenuOpen: boolean;
+    isDragging: boolean;
   
 }
 interface UiProviderProps {
@@ -13,6 +14,7 @@ interface UiProviderProps {
 
 const UI_INITIAL_STATE: UiState = {
     sideMenuOpen: false,
+    isDragging:false
 }
 
 
@@ -29,13 +31,18 @@ export const UiProvider = ({children}:UiProviderProps) => {
     }
   }
   
-  
+  const toggleDrag = (payload:boolean) => {
+    
+    dispatch({type: 'SET_IS_DRAGGING', payload})
+
+  }
 
   return (
     <UiContext.Provider value={{
       sideMenuOpen: state.sideMenuOpen,
+      isDragging:state.isDragging,
       toggleMenu,
-     
+      toggleDrag,
 
     }}>
         {children}

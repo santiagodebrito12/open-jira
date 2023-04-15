@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <Layout title='Open Jira'>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={12} lg={4}>
           <Card sx={{
             // height:'calc(100vh - 100px)'
           }}>
@@ -27,7 +27,7 @@ export default function Home() {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={12} lg={4}>
         <Card sx={{
             // height:'calc(100vh - 100px)'
           }}>
@@ -39,7 +39,7 @@ export default function Home() {
               </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs={12} sm={12} lg={4}>
         <Card sx={{
             // height:'calc(100vh - 100px)'
           }}>

@@ -1,9 +1,10 @@
 import { EntriesState } from ".";
 
+type EntriesActionType =
+| {type: "SET_NEW_ENTRY", payload: any}
+| {type: "ENTRY_UPDATED", payload: any}
 
-
-
-export const EntriesReducer = (state:EntriesState,action:any) =>{
+export const EntriesReducer = (state:EntriesState,action:EntriesActionType) =>{
 
     switch(action.type){
         case "SET_NEW_ENTRY":
@@ -11,11 +12,17 @@ export const EntriesReducer = (state:EntriesState,action:any) =>{
                 ...state,
                 entries:[action.payload,...state.entries],
             }
-        //  case "SET_CLOSE_MENU":
-        //         return{
-        //             ...state,
-        //             sideMenuOpen:false
-        //     }    
+        case "ENTRY_UPDATED":
+                return{
+                    ...state,
+                    entries:state.entries.map((entry)=>{
+                        if(entry._id === action.payload._id){
+                            entry.status = action.payload.status;
+                            entry.description = action.payload.description; 
+                        }
+                        return entry;
+                    }),
+                }
         default:
             return state;
             

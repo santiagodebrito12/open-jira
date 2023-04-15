@@ -5,6 +5,7 @@ export interface ContextProps {
    
     entries:Entry[],
     addEntry:Function,
+    upDateEntry:Function;
 
 }
 

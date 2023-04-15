@@ -4,6 +4,7 @@ import { EntriesContext } from '@/context/entries';
 import { Box, Button, TextField } from "@mui/material"
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import { v4 as uuidv4 } from 'uuid';
 
 export const NewEntry = () => {
  
@@ -12,6 +13,7 @@ export const NewEntry = () => {
     const{addEntry} =useContext(EntriesContext);
     
     const [entry, setEntry] = useState({
+        _id: '' ,
         description: '',
         status: 'pending',
         createdAt: Date.now(),}
@@ -35,6 +37,12 @@ export const NewEntry = () => {
        }else{
              addEntry(entry);
             setIsAdding(false);
+            setEntry({
+                _id : uuidv4(),
+                description: '',
+                status: 'pending',
+                createdAt: Date.now(),
+            })
        }
     }
 
