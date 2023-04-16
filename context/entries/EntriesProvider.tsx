@@ -18,54 +18,7 @@ interface EntriesProviderProps {
 
 const ENTRIES_INITIAL_STATE: EntriesState = {
     entries: [
-      {
-       _id: uuidv4(),
-        description:'lorem ipsum',
-        createdAt: Date.now(),
-        status:'pending',
-      },
-      {
-        _id: uuidv4(),
-         description:'lorem ipsum',
-         createdAt: Date.now(),
-         status:'pending',
-       },
-       {
-        _id: uuidv4(),
-         description:'lorem ipsum',
-         createdAt: Date.now(),
-         status:'pending',
-       },
-       {
-        _id: uuidv4(),
-         description:'lorem ipsum',
-         createdAt: Date.now(),
-         status:'completed',
-       },
-       {
-        _id: uuidv4(),
-         description:'lorem ipsum',
-         createdAt: Date.now(),
-         status:'completed',
-       },
-       {
-        _id: uuidv4(),
-         description:'lorem ipsum',
-         createdAt: Date.now(),
-         status:'completed',
-       },
-       {
-        _id: uuidv4(),
-         description:'lorem ipsum',
-         createdAt: Date.now(),
-         status:'progress',
-       },
-       {
-        _id: uuidv4(),
-         description:'lorem ipsum',
-         createdAt: Date.now(),
-         status:'progress',
-       }
+      
     ],
 }
 
