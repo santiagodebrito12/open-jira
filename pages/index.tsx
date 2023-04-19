@@ -1,14 +1,14 @@
-import {useContext,useState} from "react"
+import {useContext,useState,useEffect} from "react"
 import {EntriesContext} from '@/context/entries';
 import { Card, CardContent, CardHeader, Grid, Typography } from '@mui/material';
 import { Layout } from '@/components/layout';
 import { EntryList,NewEntry } from '@/components/ui';
 
+import entriesApi from "@/apis/entriesApi";
+
 export default function Home() {
-  const{entries}=useContext(EntriesContext);
-  const [pendingEntries, setPendingEntries] = useState(entries.filter((entry) => entry.status === 'pending'));
-  const [inProgressEntries, setInProgressEntries] = useState(entries.filter((entry) => entry.status === 'progress'));
-  const [completedEntries, setCompletedEntries] = useState(entries.filter((entry) => entry.status === 'completed'));
+  
+ 
   
   return (
     <Layout title='Open Jira'>

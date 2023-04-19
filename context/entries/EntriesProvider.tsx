@@ -1,8 +1,9 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { EntriesContext } from "./EntriesContext";
 import { EntriesReducer } from "./EntriesReducer";
 import { Entry } from "@/interfaces";
 import {v4 as uuidv4} from 'uuid';
+import entriesApi from "@/apis/entriesApi";
 
 
 export interface EntriesState{
@@ -40,7 +41,21 @@ export const EntriesProvider = ({children}:EntriesProviderProps) => {
       payload: entry,
     })
   }
-  
+ 
+  const getEntries = async()=>{
+    const res = await entriesApi.get('/entries');
+    const {data} = res;
+    dispatch({
+      type:"GET_ENTRIES",
+      payload:data
+    })
+   
+  }
+
+  useEffect(()=>{
+    getEntries();
+  },[])
+
 
   return (
     <EntriesContext.Provider value={{
