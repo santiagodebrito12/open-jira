@@ -13,7 +13,8 @@ const entrySchema = new Schema({
             values:['pending','progress','completed'],
             message:'{VALUE} is not supported'
             },
-        required:true
+    
+        default:"pending",
     },
 });
 

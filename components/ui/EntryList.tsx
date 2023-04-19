@@ -15,7 +15,7 @@ export const EntryList:FC<Props>= ({status}) => {
     const{entries,upDateEntry }=useContext(EntriesContext)
     
     const entriesByStatus = useMemo(()=>entries.filter(entry=>entry.status===status),[entries]);
-     console.log(entriesByStatus);
+  
 
     const onDropEntry = (ev:DragEvent<HTMLDivElement>) =>{
         const id = ev.dataTransfer.getData('text');
