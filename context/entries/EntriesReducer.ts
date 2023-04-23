@@ -17,7 +17,7 @@ export const EntriesReducer = (state:EntriesState,action:EntriesActionType) =>{
         case "SET_NEW_ENTRY":
             return{
                 ...state,
-                entries:[action.payload,...state.entries],
+                entries:[...state.entries,action.payload],
             }
         case "ENTRY_UPDATED":
                 return{

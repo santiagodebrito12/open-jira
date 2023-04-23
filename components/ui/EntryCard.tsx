@@ -1,14 +1,21 @@
 
-import { useContext,DragEvent } from "react";
+import { useContext,DragEvent,useState,ChangeEvent } from "react";
 import { Entry } from "@/interfaces"
-import { Box, Input,Card, CardActionArea, CardContent, Typography, CardActions } from "@mui/material"
+import { Box, Input,Card, CardActionArea, CardContent, Typography, CardActions, CardHeader, Button, TextField } from "@mui/material"
 import { UiContext } from "@/context/ui";
 
-export const EntryCard = ({_id,description,status,createdAt}:Entry) => {
-  
-    const{isDragging,toggleDrag}=useContext(UiContext);
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import entriesApi from "@/apis/entriesApi";
+import { EntriesContext } from "@/context/entries";
 
-  const onDragStart=(ev:DragEvent<HTMLDivElement>) =>{
+export const EntryCard = ({_id,description,status,createdAt}:Entry) => {
+    const{ getEntries} = useContext(EntriesContext);
+    const [newDescription,setNewDescription] = useState(description); 
+    const{isDragging,toggleDrag}=useContext(UiContext);
+    const [isEditing, setIsEditing] = useState<Boolean>(false)
+    const onDragStart=(ev:DragEvent<HTMLDivElement>) =>{
 
     ev.dataTransfer.setData('text', _id);
     toggleDrag(true);
@@ -20,6 +27,33 @@ export const EntryCard = ({_id,description,status,createdAt}:Entry) => {
     toggleDrag(false);
   }
 
+  const handleChange = (ev:any) =>{
+      setNewDescription(ev.target.value);
+  }
+  const deleteEntry = async(event:any) =>{
+
+ 
+      try {
+     
+      const {data} = await entriesApi.delete<Entry>(`/entries/${_id}`);
+      getEntries();
+
+
+      } catch (error) {
+       console.log(error); 
+      }   
+  }
+  const upDateEntry = async() =>{
+    try {
+        const{data}=await entriesApi.put(`/entries/${_id}`,{
+          description:newDescription,
+        })
+        getEntries();
+        console.log(data);
+    } catch (error) {
+      console.log(error) 
+    }
+  }
     return (
     <Card 
     sx={{
@@ -29,11 +63,73 @@ export const EntryCard = ({_id,description,status,createdAt}:Entry) => {
     draggable
     onDragStart={onDragStart}
     onDragEnd={onDragEnd}>
+    
+    <CardActions sx={{
+      display:'flex',
+      justifyContent:'end',
+    }}>
+      {isEditing
+      ?  <Button
+          color="success"
+          onClick={()=>{
+            upDateEntry();
+            setIsEditing(false);
+          }}>     
+        <SaveOutlinedIcon/>
+        </Button>
+ 
+         
+        : <Button 
+        color="success" 
+        onClick={()=>{
+          setIsEditing(true)
+        }}
+        >
+          <EditOutlinedIcon/>
+          </Button>
+      }
+     
+ 
+    
+     
+    <Button color="error" onClick={(event)=>{
+      deleteEntry(event);
+    }}>
+   
+      <DeleteForeverOutlinedIcon/>
+   
+    </Button>
+
+    </CardActions>
         <CardActionArea>
             <CardContent>
-                <Typography sx={{
-                    whiteSpace: 'pre-line',
-                }}>{description}</Typography>
+              
+                 
+              {isEditing 
+              ? <TextField
+       
+              fullWidth
+              value={newDescription}
+              multiline
+              autoFocus
+              
+              // error={error ? true : false}
+              // helperText={error ? 'No agregaste ninguna tarea' : 'Escribe una nueva tarea'}
+              name='newDescription'
+              aria-placeholder={description}
+              sx={{
+                  marginTop:2,
+                  marginBottom:1,
+              }}
+              onChange={(ev)=>{
+                handleChange(ev)
+              }}
+             />
+ 
+              :  <Typography sx={{
+                whiteSpace: 'pre-line',
+            }}>{description}</Typography>
+            }
             </CardContent>
             <CardActions sx={{
                 display: 'flex',
@@ -42,6 +138,7 @@ export const EntryCard = ({_id,description,status,createdAt}:Entry) => {
                 <Typography variant="body2" >{createdAt}</Typography>
             </CardActions>
         </CardActionArea>
+        
     </Card>
   )
 }

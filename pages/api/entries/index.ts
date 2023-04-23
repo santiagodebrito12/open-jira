@@ -22,6 +22,8 @@ type Data =
         case 'POST':
             return setEntrie(req,res);
 
+        case 'PATH':
+            return upDateEntry(req,res);
         default:
             return res.status(404).json({message:'Endpoint no existe'});
     }
@@ -74,7 +76,35 @@ const setEntrie = async(req:NextApiRequest,res:NextApiResponse<Data>) =>{
 
     }
  
-    
-   
+}
 
+const upDateEntry = async(req:NextApiRequest,res:NextApiResponse<Data>) =>{
+   
+    const{description}=req.body;
+    
+    if(!description) return res.status(400).json({message:"debes agregar una descripction"});
+    
+    const newEntry = new Entry({
+        description,
+        createdAt: Date.now(),
+        status:"pending",
+        
+    });
+   
+    try {
+        db.connect();
+
+        await newEntry.save();
+
+        await db.disconnect();
+        res.status(201).json(newEntry);
+    } catch (error) {
+        
+        await db.disconnect();
+        console.log(error);
+    
+        return res.status(400).json({message:"error en la conexion"})
+
+    }
+ 
 }

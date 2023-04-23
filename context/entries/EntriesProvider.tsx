@@ -28,11 +28,17 @@ export const EntriesProvider = ({children}:EntriesProviderProps) => {
   
   const [state, dispatch] = useReducer(EntriesReducer, ENTRIES_INITIAL_STATE);
 
-  const addEntry = (entry:Entry) => {
+  const addEntry = async(entry:Entry) => {
+    const {data} = await entriesApi.post<Entry>('/entries',{
+        description:entry.description,
+
+    });
+
     dispatch({
       type: 'SET_NEW_ENTRY',
-      payload: entry,
+      payload: data,
     })
+
   }
 
   const upDateEntry = (entry:Entry) => {
@@ -62,6 +68,7 @@ export const EntriesProvider = ({children}:EntriesProviderProps) => {
       entries:state.entries,
       addEntry:addEntry,
       upDateEntry:upDateEntry,
+      getEntries:getEntries,
     }}>
         {children}
     </EntriesContext.Provider>
