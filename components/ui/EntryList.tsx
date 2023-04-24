@@ -5,12 +5,14 @@ import { Entry, EntryStatus } from "@/interfaces";
 import { EntriesContext } from "@/context/entries";
 import { UiContext } from '@/context/ui';
 import styles from './EntryList.module.css';
-
+import entriesApi from '@/apis/entriesApi';
 interface Props{
     status:EntryStatus
 }
 
 export const EntryList:FC<Props>= ({status}) => {
+    const{getEntries}=useContext(EntriesContext);
+
     const {isDragging,toggleDrag} = useContext(UiContext);
     const{entries,upDateEntry }=useContext(EntriesContext)
     
@@ -19,15 +21,29 @@ export const EntryList:FC<Props>= ({status}) => {
 
     const onDropEntry = (ev:DragEvent<HTMLDivElement>) =>{
         const id = ev.dataTransfer.getData('text');
-        const entryFilter = entries.find(entry=>entry._id===id)!;
-        entryFilter.status = status;
-        upDateEntry(entryFilter);
+        // const entryFilter = entries.find(entry=>entry._id===id)!;
+        // entryFilter.status = status;
+        // upDateEntry(entryFilter);
+        upDateEntrys(id);
+        
         toggleDrag(false);
     }
+    
+    const upDateEntrys = async(id:any) =>{
+        try {
+            const{data}=await entriesApi.put(`/entries/${id}`,{
+              status:status,
+            })
+            getEntries();
+            
+        } catch (error) {
+          console.log(error) 
+        }
+      }
 
     const  allowDrop = (ev:DragEvent<HTMLDivElement>) =>{
         ev.preventDefault();
-       
+        
     }
 
     return (
