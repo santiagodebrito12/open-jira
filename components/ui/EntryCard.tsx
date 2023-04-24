@@ -64,10 +64,16 @@ export const EntryCard = ({_id,description,status,createdAt}:Entry) => {
     onDragStart={onDragStart}
     onDragEnd={onDragEnd}>
     
-    <CardActions sx={{
+    <CardActions  sx={isEditing 
+    ? {display:'flex',
+    justifyContent:'end',}
+    : {
       display:'flex',
       justifyContent:'end',
-    }}>
+      position:'absolute',
+      right:0,
+      zIndex:10000,}}>
+    
       {isEditing
       ?  <Button
           color="success"

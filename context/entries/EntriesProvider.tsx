@@ -13,7 +13,7 @@ export interface EntriesState{
 }
 interface EntriesProviderProps {
     children: React.ReactNode;
-    addEntry:Function;
+    
    
 }
 
